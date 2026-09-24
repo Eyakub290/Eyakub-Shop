@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Eyakub Shop - Online Shoe Store</title>
 
-<meta name="description" content="Eyakub Shop - Premium shoes and fashion products.">
+<meta name="description"
+content="Eyakub Shop - Premium shoes and fashion products.">
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -22,6 +29,7 @@ body{
 }
 
 /* TOP BAR */
+
 .topbar{
     background:#111827;
     color:white;
@@ -31,6 +39,7 @@ body{
 }
 
 /* HEADER */
+
 header{
     background:white;
     position:sticky;
@@ -88,6 +97,7 @@ header{
 }
 
 /* HERO */
+
 .hero{
     max-width:1200px;
     margin:20px auto;
@@ -131,7 +141,8 @@ header{
     font-weight:bold;
 }
 
-/* CATEGORIES */
+/* CONTAINER */
+
 .container{
     max-width:1200px;
     margin:auto;
@@ -149,6 +160,8 @@ header{
     font-size:25px;
 }
 
+/* CATEGORIES */
+
 .categories{
     display:grid;
     grid-template-columns:repeat(5,1fr);
@@ -162,6 +175,7 @@ header{
     text-align:center;
     cursor:pointer;
     box-shadow:0 2px 8px rgba(0,0,0,.05);
+    transition:.2s;
 }
 
 .category:hover{
@@ -174,6 +188,7 @@ header{
 }
 
 /* PRODUCTS */
+
 .products{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -247,6 +262,7 @@ header{
 }
 
 /* FEATURES */
+
 .features{
     margin:40px 0;
     display:grid;
@@ -277,6 +293,7 @@ header{
 }
 
 /* FOOTER */
+
 footer{
     background:#111827;
     color:white;
@@ -296,7 +313,8 @@ footer h3{
     margin-bottom:15px;
 }
 
-footer p,footer a{
+footer p,
+footer a{
     color:#cbd5e1;
     font-size:14px;
     line-height:1.8;
@@ -307,6 +325,8 @@ footer a{
     display:block;
 }
 
+/* COPYRIGHT */
+
 .copyright{
     text-align:center;
     border-top:1px solid #374151;
@@ -316,6 +336,7 @@ footer a{
 }
 
 /* WHATSAPP */
+
 .whatsapp{
     position:fixed;
     right:18px;
@@ -334,8 +355,29 @@ footer a{
     z-index:2000;
 }
 
+/* LOADING */
+
+.loading{
+    grid-column:1/-1;
+    text-align:center;
+    padding:50px 20px;
+    background:white;
+    border-radius:12px;
+    color:#666;
+}
+
+.no-products{
+    grid-column:1/-1;
+    text-align:center;
+    padding:50px 20px;
+    background:white;
+    border-radius:12px;
+}
+
 /* MOBILE */
+
 @media(max-width:900px){
+
     .products{
         grid-template-columns:repeat(3,1fr);
     }
@@ -347,9 +389,11 @@ footer a{
     .features{
         grid-template-columns:repeat(2,1fr);
     }
+
 }
 
 @media(max-width:600px){
+
     .nav{
         flex-wrap:wrap;
         gap:10px;
@@ -405,249 +449,578 @@ footer a{
     .footer-inner{
         grid-template-columns:1fr;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
+
+<!-- TOP BAR -->
 
 <div class="topbar">
 🚚 Free Delivery Offer • Order Now on WhatsApp
 </div>
 
+
+<!-- HEADER -->
+
 <header>
-    <div class="nav">
 
-        <div class="logo">
-            Eyakub Shop
-        </div>
+<div class="nav">
 
-        <div class="search">
-            <input id="searchInput" type="text"
-            placeholder="Search shoes...">
-            <button onclick="searchProducts()">🔍</button>
-        </div>
+<div class="logo">
+Eyakub Shop
+</div>
 
-        <button class="nav-btn">
-            🛒 Cart
-        </button>
+<div class="search">
 
-    </div>
+<input
+id="searchInput"
+type="text"
+placeholder="Search shoes..."
+oninput="searchProducts()">
+
+<button onclick="searchProducts()">
+🔍
+</button>
+
+</div>
+
+<button class="nav-btn">
+🛒 Cart
+</button>
+
+</div>
+
 </header>
 
 
+<!-- HERO -->
+
 <section class="hero">
-    <div class="hero-box">
 
-        <div class="hero-content">
+<div class="hero-box">
 
-            <h1>
-                Step Into Your Style
-            </h1>
+<div class="hero-content">
 
-            <p>
-                Discover premium shoes at affordable prices.
-                Shop your favourite style from Eyakub Shop.
-            </p>
+<h1>
+Step Into Your Style
+</h1>
 
-            <a href="#products" class="shop-btn">
-                Shop Now →
-            </a>
+<p>
+Discover premium shoes at affordable prices.
+Shop your favourite style from Eyakub Shop.
+</p>
 
-        </div>
+<a href="#products" class="shop-btn">
+Shop Now →
+</a>
 
-    </div>
+</div>
+
+</div>
+
 </section>
 
 
+<!-- MAIN -->
+
 <main class="container">
 
-    <div class="section-title">
-        <h2>Shop By Category</h2>
-    </div>
 
-    <div class="categories">
+<!-- CATEGORIES -->
 
-        <div class="category">
-            <div class="category-icon">👟</div>
-            <b>Men's Shoes</b>
-        </div>
+<div class="section-title">
 
-        <div class="category">
-            <div class="category-icon">👠</div>
-            <b>Women's Shoes</b>
-        </div>
+<h2>
+Shop By Category
+</h2>
 
-        <div class="category">
-            <div class="category-icon">🥾</div>
-            <b>Casual Shoes</b>
-        </div>
-
-        <div class="category">
-            <div class="category-icon">🏃</div>
-            <b>Sports Shoes</b>
-        </div>
-
-        <div class="category">
-            <div class="category-icon">🥿</div>
-            <b>Sandals</b>
-        </div>
-
-    </div>
+</div>
 
 
-    <div class="section-title" id="products">
-        <h2>Featured Shoes</h2>
-        <span id="productCount"></span>
-    </div>
+<div class="categories">
+
+<div
+class="category"
+onclick="filterCategory('mens-shoes')">
+
+<div class="category-icon">
+👟
+</div>
+
+<b>
+Men's Shoes
+</b>
+
+</div>
 
 
-    <div class="products" id="productList"></div>
+<div
+class="category"
+onclick="filterCategory('womens-shoes')">
+
+<div class="category-icon">
+👠
+</div>
+
+<b>
+Women's Shoes
+</b>
+
+</div>
 
 
-    <div class="features">
+<div
+class="category"
+onclick="filterCategory('casual-shoes')">
 
-        <div class="feature">
-            <div class="feature-icon">🚚</div>
-            <h3>Fast Delivery</h3>
-            <p>Quick delivery service</p>
-        </div>
+<div class="category-icon">
+🥾
+</div>
 
-        <div class="feature">
-            <div class="feature-icon">🔒</div>
-            <h3>Secure Order</h3>
-            <p>Your information is protected</p>
-        </div>
+<b>
+Casual Shoes
+</b>
 
-        <div class="feature">
-            <div class="feature-icon">💬</div>
-            <h3>WhatsApp Support</h3>
-            <p>Easy customer communication</p>
-        </div>
+</div>
 
-        <div class="feature">
-            <div class="feature-icon">⭐</div>
-            <h3>Quality Products</h3>
-            <p>Premium collection</p>
-        </div>
 
-    </div>
+<div
+class="category"
+onclick="filterCategory('sports-shoes')">
+
+<div class="category-icon">
+🏃
+</div>
+
+<b>
+Sports Shoes
+</b>
+
+</div>
+
+
+<div
+class="category"
+onclick="filterCategory('sandals')">
+
+<div class="category-icon">
+🥿
+</div>
+
+<b>
+Sandals
+</b>
+
+</div>
+
+</div>
+
+
+<!-- PRODUCTS -->
+
+<div
+class="section-title"
+id="products">
+
+<h2>
+Featured Shoes
+</h2>
+
+<span id="productCount">
+Loading...
+</span>
+
+</div>
+
+
+<div
+class="products"
+id="productList">
+
+<div class="loading">
+⏳ Loading products...
+</div>
+
+</div>
+
+
+<!-- FEATURES -->
+
+<div class="features">
+
+<div class="feature">
+
+<div class="feature-icon">
+🚚
+</div>
+
+<h3>
+Fast Delivery
+</h3>
+
+<p>
+Quick delivery service
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="feature-icon">
+🔒
+</div>
+
+<h3>
+Secure Order
+</h3>
+
+<p>
+Your information is protected
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="feature-icon">
+💬
+</div>
+
+<h3>
+WhatsApp Support
+</h3>
+
+<p>
+Easy customer communication
+</p>
+
+</div>
+
+
+<div class="feature">
+
+<div class="feature-icon">
+⭐
+</div>
+
+<h3>
+Quality Products
+</h3>
+
+<p>
+Premium collection
+</p>
+
+</div>
+
+</div>
 
 </main>
 
 
+<!-- FOOTER -->
+
 <footer>
 
-    <div class="footer-inner">
+<div class="footer-inner">
 
-        <div>
-            <h3>Eyakub Shop</h3>
-            <p>
-                Your online destination for quality shoes
-                and fashion products.
-            </p>
-        </div>
 
-        <div>
-            <h3>Quick Links</h3>
-            <a href="#products">Products</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact</a>
-        </div>
+<div>
 
-        <div>
-            <h3>Follow Us</h3>
+<h3>
+Eyakub Shop
+</h3>
 
-            <a target="_blank"
-            href="https://www.facebook.com/profile.php?id=61594226919156">
-                Facebook Page
-            </a>
+<p>
+Your online destination for quality shoes
+and fashion products.
+</p>
 
-            <a target="_blank"
-            href="https://wa.me/966567225245">
-                WhatsApp
-            </a>
+</div>
 
-        </div>
 
-    </div>
+<div>
 
-    <div class="copyright">
-        © 2026 Eyakub Shop. All Rights Reserved.
-    </div>
+<h3>
+Quick Links
+</h3>
+
+<a href="#products">
+Products
+</a>
+
+<a href="#">
+About Us
+</a>
+
+<a href="#">
+Contact
+</a>
+
+</div>
+
+
+<div>
+
+<h3>
+Follow Us
+</h3>
+
+<a
+target="_blank"
+href="https://www.facebook.com/profile.php?id=61594226919156">
+
+Facebook Page
+
+</a>
+
+
+<a
+target="_blank"
+href="https://wa.me/966567225245">
+
+WhatsApp
+
+</a>
+
+</div>
+
+
+</div>
+
+
+<div class="copyright">
+
+© 2026 Eyakub Shop. All Rights Reserved.
+
+</div>
 
 </footer>
 
 
-<a class="whatsapp"
+<!-- WHATSAPP -->
+
+<a
+class="whatsapp"
 target="_blank"
 href="https://wa.me/966567225245">
-    ☎
+
+☎
+
 </a>
 
 
 <script>
 
-const products = [
+/* =========================================
+   SUPABASE CONNECTION
+========================================= */
+
+const SUPABASE_URL =
+"https://lkienmjnbclxcoydfnhy.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_ZWDf1B1qM3xR6XYHyq4u2w_vTwf0PUX";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =========================================
+   SAMPLE PRODUCTS
+   এগুলো fallback হিসেবে থাকবে
+========================================= */
+
+const sampleProducts = [
 
 {
     name:"Premium Casual Sneaker",
-    price:"৳ 1,850",
-    oldPrice:"৳ 2,400",
-    image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800"
+    price:1850,
+    oldPrice:2400,
+    image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800",
+    category:"casual-shoes"
 },
 
 {
     name:"Classic Running Shoe",
-    price:"৳ 2,200",
-    oldPrice:"৳ 2,900",
-    image:"https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=800"
+    price:2200,
+    oldPrice:2900,
+    image:"https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=800",
+    category:"sports-shoes"
 },
 
 {
     name:"Premium Sport Shoe",
-    price:"৳ 2,450",
-    oldPrice:"৳ 3,200",
-    image:"https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=800"
+    price:2450,
+    oldPrice:3200,
+    image:"https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=800",
+    category:"sports-shoes"
 },
 
 {
     name:"Modern White Sneaker",
-    price:"৳ 1,990",
-    oldPrice:"৳ 2,600",
-    image:"https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?w=800"
+    price:1990,
+    oldPrice:2600,
+    image:"https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?w=800",
+    category:"casual-shoes"
 },
 
 {
     name:"Fashion Street Shoe",
-    price:"৳ 2,100",
-    oldPrice:"৳ 2,750",
-    image:"https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800"
+    price:2100,
+    oldPrice:2750,
+    image:"https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800",
+    category:"mens-shoes"
 },
 
 {
     name:"Comfort Walking Shoe",
-    price:"৳ 1,750",
-    oldPrice:"৳ 2,300",
-    image:"https://images.unsplash.com/photo-1543508282-6319a3e2621f?w=800"
+    price:1750,
+    oldPrice:2300,
+    image:"https://images.unsplash.com/photo-1543508282-6319a3e2621f?w=800",
+    category:"mens-shoes"
 },
 
 {
     name:"Premium Black Sneaker",
-    price:"৳ 2,300",
-    oldPrice:"৳ 3,000",
-    image:"https://images.unsplash.com/photo-1552346154-21d32810aba3?w=800"
+    price:2300,
+    oldPrice:3000,
+    image:"https://images.unsplash.com/photo-1552346154-21d32810aba3?w=800",
+    category:"mens-shoes"
 },
 
 {
     name:"Urban Fashion Shoe",
-    price:"৳ 1,950",
-    oldPrice:"৳ 2,500",
-    image:"https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800"
+    price:1950,
+    oldPrice:2500,
+    image:"https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800",
+    category:"casual-shoes"
 }
 
 ];
 
+
+/* =========================================
+   CURRENT PRODUCT LIST
+========================================= */
+
+let products = [];
+
+let allProducts = [];
+
+
+/* =========================================
+   LOAD PRODUCTS FROM SUPABASE
+========================================= */
+
+async function loadProducts(){
+
+    const container =
+        document.getElementById("productList");
+
+    container.innerHTML =
+        '<div class="loading">⏳ Loading products...</div>';
+
+    try{
+
+        const { data, error } =
+            await supabaseClient
+            .from("products")
+            .select(`
+                id,
+                name,
+                price,
+                old_price,
+                stock,
+                image_urls,
+                is_active,
+                categories (
+                    slug
+                )
+            `)
+            .eq("is_active", true)
+            .order("created_at", {
+                ascending:false
+            });
+
+
+        if(error){
+
+            console.log(
+                "Supabase product error:",
+                error
+            );
+
+            products = sampleProducts;
+
+        }else if(data && data.length > 0){
+
+            products =
+                data.map(product => ({
+
+                    id:product.id,
+
+                    name:product.name,
+
+                    price:Number(product.price || 0),
+
+                    oldPrice:Number(product.old_price || 0),
+
+                    image:
+                        product.image_urls &&
+                        product.image_urls.length
+                        ?
+                        product.image_urls[0]
+                        :
+                        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800",
+
+                    category:
+                        product.categories
+                        ?
+                        product.categories.slug
+                        :
+                        ""
+
+                }));
+
+        }else{
+
+            products = sampleProducts;
+
+        }
+
+        allProducts = [...products];
+
+        displayProducts(products);
+
+    }catch(error){
+
+        console.log(error);
+
+        products = sampleProducts;
+
+        allProducts = [...products];
+
+        displayProducts(products);
+
+    }
+
+}
+
+
+/* =========================================
+   DISPLAY PRODUCTS
+========================================= */
 
 function displayProducts(list){
 
@@ -656,40 +1029,108 @@ function displayProducts(list){
 
     container.innerHTML = "";
 
-    list.forEach((product,index)=>{
+
+    if(!list || list.length === 0){
+
+        container.innerHTML = `
+        
+        <div class="no-products">
+
+            <h3>
+            😔 No products found
+            </h3>
+
+            <p style="margin-top:8px;color:#777;">
+            Please try another search.
+            </p>
+
+        </div>
+
+        `;
+
+        document.getElementById("productCount")
+        .innerText =
+        "0 Products";
+
+        return;
+
+    }
+
+
+    list.forEach((product)=>{
+
+        const safeName =
+            String(product.name)
+            .replace(/'/g,"\\'");
+
+
+        const price =
+            Number(product.price || 0)
+            .toLocaleString();
+
+
+        const oldPrice =
+            Number(product.oldPrice || 0)
+            .toLocaleString();
+
 
         container.innerHTML += `
 
-        <div class="product">
+        <div
+        class="product">
 
             <img
             class="product-img"
             src="${product.image}"
-            alt="${product.name}">
+            alt="${product.name}"
+            loading="lazy">
+
 
             <div class="product-info">
 
                 <div class="product-title">
+
                     ${product.name}
+
                 </div>
+
 
                 <div class="rating">
+
                     ★★★★★
+
                 </div>
+
 
                 <div>
+
                     <span class="price">
-                        ${product.price}
+
+                        ৳ ${price}
+
                     </span>
 
-                    <span class="old-price">
-                        ${product.oldPrice}
-                    </span>
+
+                    ${
+                        product.oldPrice > 0
+                        ?
+                        `
+                        <span class="old-price">
+
+                            ৳ ${oldPrice}
+
+                        </span>
+                        `
+                        :
+                        ""
+                    }
+
                 </div>
+
 
                 <button
                 class="buy-btn"
-                onclick="orderProduct('${product.name}')">
+                onclick="orderProduct('${safeName}')">
 
                     Order on WhatsApp
 
@@ -703,44 +1144,102 @@ function displayProducts(list){
 
     });
 
-    document.getElementById("productCount").innerText =
-        list.length + " Products";
+
+    document.getElementById("productCount")
+    .innerText =
+    list.length + " Products";
+
 }
 
+
+/* =========================================
+   WHATSAPP ORDER
+========================================= */
 
 function orderProduct(name){
 
     const message =
-        "Hello Eyakub Shop, I want to order: " + name;
+        "Hello Eyakub Shop, I want to order: "
+        + name;
 
     const url =
         "https://wa.me/966567225245?text="
         + encodeURIComponent(message);
 
     window.open(url,"_blank");
+
 }
 
+
+/* =========================================
+   SEARCH
+========================================= */
 
 function searchProducts(){
 
     const search =
         document.getElementById("searchInput")
         .value
-        .toLowerCase();
+        .toLowerCase()
+        .trim();
+
+
+    if(!search){
+
+        displayProducts(allProducts);
+
+        return;
+
+    }
+
 
     const filtered =
-        products.filter(product =>
-            product.name.toLowerCase()
+        allProducts.filter(product =>
+
+            product.name
+            .toLowerCase()
             .includes(search)
+
         );
 
+
     displayProducts(filtered);
+
 }
 
 
-displayProducts(products);
+/* =========================================
+   CATEGORY FILTER
+========================================= */
+
+function filterCategory(category){
+
+    const filtered =
+        allProducts.filter(product =>
+
+            product.category === category
+
+        );
+
+
+    displayProducts(filtered);
+
+
+    document.getElementById("products")
+    .scrollIntoView({
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================
+   START WEBSITE
+========================================= */
+
+loadProducts();
 
 </script>
 
 </body>
-  </html>
+    </html>
