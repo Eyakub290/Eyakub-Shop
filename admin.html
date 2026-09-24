@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Eyakub Shop - Admin Login</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#f3f4f6;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-box{
+    width:100%;
+    max-width:420px;
+    background:white;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 10px 35px rgba(0,0,0,.12);
+}
+
+.logo{
+    text-align:center;
+    color:#e11d48;
+    font-size:28px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#777;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    margin-bottom:7px;
+    font-weight:bold;
+    font-size:14px;
+}
+
+input{
+    width:100%;
+    padding:13px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    margin-bottom:17px;
+    outline:none;
+    font-size:15px;
+}
+
+input:focus{
+    border-color:#e11d48;
+}
+
+button{
+    width:100%;
+    border:0;
+    padding:13px;
+    border-radius:8px;
+    background:#e11d48;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:disabled{
+    opacity:.6;
+}
+
+.message{
+    margin-top:15px;
+    text-align:center;
+    font-size:14px;
+}
+
+.back{
+    display:block;
+    text-align:center;
+    margin-top:20px;
+    color:#555;
+    text-decoration:none;
+    font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <div class="logo">
+        Eyakub Shop
+    </div>
+
+    <div class="subtitle">
+        🔐 Admin Panel Login
+    </div>
+
+    <form id="loginForm">
+
+        <label>
+            Admin Email
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Enter admin email"
+            required
+        >
+
+        <label>
+            Password
+        </label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter password"
+            required
+        >
+
+        <button
+            type="submit"
+            id="loginButton">
+            Login
+        </button>
+
+    </form>
+
+    <div
+        class="message"
+        id="message">
+    </div>
+
+    <a
+        class="back"
+        href="index.html">
+        ← Back to Eyakub Shop
+    </a>
+
+</div>
+
+
+<script>
+
+/* SUPABASE */
+
+const SUPABASE_URL =
+"https://lkienmjnbclxcoydfnhy.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_ZWDf1B1qM3xR6XYHyq4u2w_vTwf0PUX";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* LOGIN */
+
+document
+.getElementById("loginForm")
+.addEventListener("submit", async function(event){
+
+    event.preventDefault();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const button =
+        document.getElementById("loginButton");
+
+    const message =
+        document.getElementById("message");
+
+
+    button.disabled = true;
+
+    button.innerText = "Logging in...";
+
+    message.innerText = "";
+
+
+    try{
+
+        const { data, error } =
+            await supabaseClient.auth.signInWithPassword({
+                email:email,
+                password:password
+            });
+
+
+        if(error){
+
+            throw error;
+
+        }
+
+
+        const user =
+            data.user;
+
+
+        /* CHECK ADMIN */
+
+        const { data:profile, error:profileError } =
+            await supabaseClient
+            .from("profiles")
+            .select("role")
+            .eq("id",user.id)
+            .single();
+
+
+        if(profileError){
+
+            await supabaseClient.auth.signOut();
+
+            throw new Error(
+                "Admin profile পাওয়া যায়নি।"
+            );
+
+        }
+
+
+        if(profile.role !== "admin"){
+
+            await supabaseClient.auth.signOut();
+
+            throw new Error(
+                "এই account-এর Admin permission নেই।"
+            );
+
+        }
+
+
+        message.style.color = "green";
+
+        message.innerText =
+            "✅ Login successful!";
+
+
+        /* পরে dashboard.html তৈরি করব */
+
+        setTimeout(function(){
+
+            window.location.href =
+                "admin-dashboard.html";
+
+        },800);
+
+
+    }catch(error){
+
+        message.style.color = "#dc2626";
+
+        message.innerText =
+            "❌ " + error.message;
+
+        button.disabled = false;
+
+        button.innerText = "Login";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
