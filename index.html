@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Eyakub Shop</title>
+<link rel="stylesheet" href="css/style.css"><script src="js/store.js"></script></head><body>
+<header><div class="wrap top"><a class="logo" href="./">🛒 Eyakub <b>Shop</b></a>
+<div class="search"><input id="q" placeholder="পণ্য খুঁজুন..."><button onclick="render()">🔍</button></div><button class="hb" onclick="openCart()">🛒 Cart (<span id="cc">0</span>)</button><button class="hb" onclick="lgo()">🔐 Admin</button></div></header>
+<div class="nav"><div class="wrap" id="cats"></div></div>
+<main class="wrap">
+<section class="hero"><div><span style="background:var(--g);padding:3px 10px;border-radius:20px;font-size:13px">Special Offer</span><h1>স্টাইলিশ জুতা<br>সেরা দামে!</h1><p>আপনার স্টাইল, আমাদের অঙ্গীকার</p><button class="btn w" onclick="document.getElementById('all').scrollIntoView({behavior:'smooth'})">এখনই কিনুন</button></div><div class="off">৫০%<br><small style="font-size:20px">পর্যন্ত ছাড়</small></div></section>
+<div class="perks"><div>🚚 <b>সারা দেশে ডেলিভারি</b><br>দ্রুত ও নিরাপদ</div><div>🛡️ <b>নিরাপদ অর্ডার</b><br>WhatsApp এ কনফার্ম</div><div>🔄 <b>সহজ রিটার্ন</b><br>৭ দিনের মধ্যে</div><div>🎧 <b>২৪/৭ সাপোর্ট</b><br>আমাদের সাথে থাকুন</div></div>
+<h2>⚡ Flash Sale</h2><div class="grid" id="flash"></div>
+<h2 id="all">সব পণ্য</h2><div class="grid" id="list"></div><button class="btn more" id="more" onclick="lim+=24;render()">আরও দেখুন</button>
+</main>
+<footer><div class="wrap"><b style="font-size:18px;color:#fff">Eyakub Shop</b> — Better Products, Better Life<br><br>📱 WhatsApp: <a id="wal"></a> &nbsp; 📘 <a href="" id="fb" target="_blank">আমাদের Facebook পেইজ</a><br><br>© 2026 Eyakub Shop. All rights reserved.</div></footer>
+<div class="modal" id="m" onclick="if(event.target===this)closeM()"><div class="box"><button class="x" onclick="closeM()">×</button><div id="mb"></div><h2>আরও পণ্য</h2><div class="grid" id="rel"></div></div></div>
+<div class="modal" id="lg" onclick="if(event.target===this)this.classList.remove('on')"><div class="box lgbox"><button class="close" onclick="$('lg').classList.remove('on')">×</button><h2>🔐 Admin Login</h2>
+<label>Email</label><input id="le" type="email" autocomplete="username"><label>Password</label><input id="lp" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')adminLogin()"><br><br><button class="btn pill" onclick="adminLogin()">Login</button><p id="lerr" style="margin-top:14px;color:var(--r)"></p></div></div>
+<div class="modal" id="ct" onclick="if(event.target===this)this.classList.remove('on')"><div class="box" style="max-width:560px"><button class="x" onclick="$('ct').classList.remove('on')">×</button><h2 style="margin-top:0">🛒 আপনার কার্ট</h2><div id="cb"></div></div></div>
+<script>
+const $=i=>document.getElementById(i);
+let C=[];try{C=JSON.parse(localStorage.getItem('eyk_cart')||'[]')}catch(e){}
+function svC(){localStorage.setItem('eyk_cart',JSON.stringify(C));$('cc').textContent=C.length}
+function lgo(){$('lerr').textContent='';$('lg').classList.add('on')}
+function adminLogin(){if($('le').value.trim().toLowerCase()===CFG.email&&$('lp').value===CFG.pass){sessionStorage.a=1;location.href='admin.html'}else $('lerr').textContent='Login failed: ভুল ইমেইল বা পাসওয়ার্ড'}
+function addCart(){C.push({id:cur.id,c:selC,s:selS,q:Math.max(1,+$('oq').value||1)});svC();closeM();alert('কার্টে যোগ হয়েছে ✅')}
+function openCart(){drawCart();$('ct').classList.add('on')}
+function drawCart(){let t=0;const rows=C.map((x,i)=>{const p=P.find(p=>p.id===x.id);if(!p)return'';t+=p.price*x.q;return `<div style="display:flex;gap:10px;align-items:center;border-bottom:1px solid #eee;padding:8px 0"><img src="${p.img||art(p.cat,x.c)}" style="width:54px;border-radius:8px"><div style="flex:1;font-size:14px"><b>${p.name}</b><br>${x.c} · ${x.s} · ${x.q} পিস<br><span class="pr">${tk(p.price*x.q)}</span></div><button class="btn sm red" onclick="C.splice(${i},1);svC();drawCart()">×</button></div>`}).join('');
+ $('cb').innerHTML=C.length?rows+`<h3 style="margin:12px 0">মোট: ${tk(t)}</h3><div class="f2"><div><label>নাম *</label><input id="cn"></div><div><label>ফোন *</label><input id="cp" type="tel"></div></div><label>পূর্ণ ঠিকানা *</label><textarea id="ca" rows="2"></textarea><label>জেলা</label><input id="cd"><button class="btn" style="width:100%;margin-top:14px" onclick="checkout(${t})">WhatsApp এ অর্ডার করুন</button>`:'<p>কার্ট খালি। পণ্য যোগ করুন।</p>'}
+function checkout(t){const g=i=>$(i).value.trim();if(!g('cn')||!g('cp')||!g('ca'))return alert('নাম, ফোন ও ঠিকানা দিন');
+ const it=C.map((x,i)=>{const p=P.find(p=>p.id===x.id);return `${i+1}. ${p.name} (ID ${p.id}) - ${x.c}, সাইজ ${x.s}, ${x.q} পিস = ${tk(p.price*x.q)}`}).join('\n');
+ window.open(`https://wa.me/${CFG.wa}?text=${encodeURIComponent(`🛒 নতুন অর্ডার - ${CFG.name}\n${it}\n\nমোট: ${tk(t)}\n\nনাম: ${g('cn')}\nফোন: ${g('cp')}\nঠিকানা: ${g('ca')}\nজেলা: ${g('cd')}`)}`,'_blank')}
+let P=[],cat='all',lim=24,cur=null,selC='',selS='';
+const img=p=>p.img||art(p.cat,p.color[0]),off=p=>Math.round((1-p.price/p.old)*100);
+function card(p){return `<div class="card" onclick="openM(${p.id})"><span class="badge">-${off(p)}%</span><img loading="lazy" src="${img(p)}"><div class="n">${p.name}</div><div class="pr">${tk(p.price)}<s>${tk(p.old)}</s></div><div class="meta">⭐ ${p.rating} · ${p.sold} বিক্রি</div>${p.stock<1?'<div class="out meta">স্টক শেষ</div>':''}</div>`}
+function render(){const q=document.getElementById('q').value.toLowerCase();
+ const cs=[...new Set(P.map(p=>p.cat))];document.getElementById('cats').innerHTML=['all',...cs].map(c=>`<button class="${c===cat?'on':''}" onclick="cat='${c}';lim=24;render()">${c==='all'?'🏠 হোম':catName(c)}</button>`).join('');
+ const f=P.filter(p=>(cat==='all'||p.cat===cat)&&p.name.toLowerCase().includes(q));
+ document.getElementById('flash').innerHTML=[...P].sort((a,b)=>off(b)-off(a)).slice(0,5).map(card).join('');
+ document.getElementById('list').innerHTML=f.slice(0,lim).map(card).join('')||'<p>কোনো পণ্য পাওয়া যায়নি।</p>';
+ document.getElementById('more').style.display=f.length>lim?'block':'none'}
+function openM(id){cur=P.find(p=>p.id===id);selC=cur.color[0];selS=cur.sizes[0];drawM();
+ document.getElementById('rel').innerHTML=P.filter(p=>p.cat===cur.cat&&p.id!==id).sort(()=>Math.random()-.5).slice(0,8).map(card).join('');
+ document.getElementById('m').classList.add('on');document.getElementById('m').scrollTop=0}
+function drawM(){const p=cur;document.getElementById('mb').innerHTML=`<div class="det"><div><img src="${p.img||art(p.cat,selC)}"></div><div>
+<h2 style="margin-top:0">${p.name}</h2><div class="pr" style="font-size:22px">${tk(p.price)}<s>${tk(p.old)}</s> <span class="badge" style="position:static">-${off(p)}%</span></div>
+<p class="meta" style="margin:6px 0">${p.desc} · স্টক: ${p.stock} পিস</p>
+<label>কালার</label>${p.color.map(c=>`<span class="chip ${c===selC?'on':''}" onclick="selC='${c}';drawM()">${c}</span>`).join('')}
+<label>সাইজ</label>${p.sizes.map(s=>`<span class="chip ${s===selS?'on':''}" onclick="selS='${s}';drawM()">${s}</span>`).join('')}
+<h3 style="margin-top:16px">অর্ডার করুন</h3>
+<div class="f2"><div><label>আপনার নাম *</label><input id="on"></div><div><label>ফোন নাম্বার *</label><input id="op" type="tel"></div></div>
+<label>পূর্ণ ঠিকানা *</label><textarea id="oa" rows="2"></textarea>
+<div class="f2"><div><label>জেলা</label><input id="od"></div><div><label>পরিমাণ</label><input id="oq" type="number" min="1" max="${p.stock}" value="1"></div></div>
+<label>অতিরিক্ত নোট</label><input id="ot">
+<button class="btn w" style="width:100%;margin-top:14px;border:1px solid var(--g)" ${p.stock<1?'disabled':''} onclick="addCart()">🛒 কার্টে যোগ করুন</button>
+<button class="btn" style="width:100%;margin-top:8px" ${p.stock<1?'disabled':''} onclick="order()">WhatsApp এ অর্ডার করুন</button></div></div>`}
+function order(){const g=i=>document.getElementById(i).value.trim();if(!g('on')||!g('op')||!g('oa'))return alert('নাম, ফোন ও ঠিকানা দিন');
+ const q=Math.max(1,+g('oq')||1),m=`🛒 নতুন অর্ডার - ${CFG.name}\nপণ্য: ${cur.name} (ID ${cur.id})\nকালার: ${selC}\nসাইজ: ${selS}\nপরিমাণ: ${q}\nমোট: ${tk(cur.price*q)}\n\nনাম: ${g('on')}\nফোন: ${g('op')}\nঠিকানা: ${g('oa')}\nজেলা: ${g('od')}\nনোট: ${g('ot')}`;
+ window.open(`https://wa.me/${CFG.wa}?text=${encodeURIComponent(m)}`,'_blank')}
+function closeM(){document.getElementById('m').classList.remove('on')}
+document.getElementById('q').addEventListener('keydown',e=>e.key==='Enter'&&render());
+document.getElementById('fb').href=CFG.fb;document.getElementById('wal').textContent='+'+CFG.wa;document.getElementById('wal').href='https://wa.me/'+CFG.wa;
+loadProducts().then(p=>{P=p;svC();render()});
+</script></body></html>
