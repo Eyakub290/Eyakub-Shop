@@ -1,0 +1,315 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f6f8;
+  color: #222;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+/* Top Bar */
+.top-bar {
+  background-color: #111827;
+  color: #fff;
+  text-align: center;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+/* Header */
+.header {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111827;
+  text-decoration: none;
+}
+
+.logo span {
+  color: #f59e0b;
+}
+
+.search-box {
+  display: flex;
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 6px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  font-size: 13px;
+}
+
+.search-box button {
+  background: #f59e0b;
+  border: none;
+  padding: 6px 12px;
+  color: white;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.icon-btn {
+  font-size: 18px;
+  color: #374151;
+  text-decoration: none;
+  position: relative;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #ef4444;
+  color: white;
+  font-size: 9px;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
+/* Hero Section Grid */
+.hero-grid-section {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.main-banner {
+  background: linear-gradient(135deg, #1f2937, #111827);
+  color: white;
+  padding: 30px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.banner-content .tag-label {
+  background: #f59e0b;
+  color: #fff;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.banner-content h1 {
+  font-size: 26px;
+  margin: 10px 0;
+  line-height: 1.2;
+}
+
+.banner-content p {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 15px;
+}
+
+.side-banners {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sub-banner {
+  padding: 20px;
+  border-radius: 8px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bg-blue { background: #e0f2fe; color: #0369a1; }
+.bg-yellow { background: #fef3c7; color: #b45309; }
+
+.sub-banner h3 { font-size: 16px; margin-bottom: 8px; }
+.link-btn { font-size: 12px; font-weight: bold; text-decoration: none; color: inherit; }
+
+/* Categories Showcase */
+.categories-showcase {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cat-card {
+  background: white;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  border: 1px solid #e5e7eb;
+}
+
+.cat-card i { font-size: 20px; color: #f59e0b; margin-bottom: 5px; }
+.cat-card h4 { font-size: 12px; }
+.cat-card a { font-size: 10px; color: #6b7280; text-decoration: none; }
+
+/* Product Grid (Main Layout) */
+.products-section { margin-bottom: 30px; }
+
+.section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.section-title h2 { font-size: 16px; }
+.section-title span { font-size: 12px; color: #6b7280; }
+
+/* Mobile e 2ti ebong Desktop e 4ti product ghono ghono dekhabe */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+  }
+}
+
+.product-card {
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.sale-tag {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: #ef4444;
+  color: white;
+  font-size: 9px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.product-img img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.product-info h3 {
+  font-size: 12px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rating { font-size: 10px; margin-bottom: 4px; }
+
+.price { margin-bottom: 8px; }
+.current-price { font-size: 13px; font-weight: bold; color: #111827; }
+.old-price { font-size: 10px; color: #9ca3af; text-decoration: line-through; margin-left: 3px; }
+
+.card-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.btn {
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+
+.primary-btn { background: #f59e0b; color: white; border: none; font-size: 12px; }
+
+.btn-outline {
+  border: 1px solid #374151;
+  background: transparent;
+  color: #374151;
+  flex: 1;
+  font-size: 10px;
+}
+
+.btn-dark {
+  background: #111827;
+  color: white;
+  border: none;
+  flex: 1;
+  font-size: 10px;
+}
+
+/* Responsive adjust for mobile hero */
+@media (max-width: 767px) {
+  .hero-grid-section {
+    grid-template-columns: 1fr;
+  }
+  .categories-showcase {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Features Section */
+.features-section { background: white; padding: 20px 0; border-top: 1px solid #e5e7eb; }
+.features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; text-align: center; }
+.feature-item i { font-size: 18px; color: #f59e0b; margin-bottom: 4px; }
+.feature-item h4 { font-size: 11px; }
+.feature-item p { font-size: 9px; color: #6b7280; }
+
+/* Footer */
+.footer { background: #111827; color: white; padding: 20px 0; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+.footer-col h3 { font-size: 13px; margin-bottom: 8px; color: #f59e0b; }
+.footer-col p, .footer-col li { font-size: 11px; color: #9ca3af; line-height: 1.5; }
+.footer-col ul { list-style: none; }
+.footer-col a { color: #9ca3af; text-decoration: none; }
